@@ -16,6 +16,7 @@ class MiddlewareTest extends TestCase
         // Arrange
         $request = $this->prophesize(ServerRequestInterface::class)->reveal();
         $response = $this->prophesize(ResponseInterface::class)->reveal();
+        $delegate = new Delegate($response);
         $middleware = function (
             ServerRequestInterface $request,
             ResponseInterface $response,
@@ -30,9 +31,10 @@ class MiddlewareTest extends TestCase
         $middleware = new Middleware($middleware, $response);
 
         // Act
-        $response = $middleware->process($request, new Delegate($response));
+        $response = $middleware->process($request, $delegate);
 
         // Assert
+        $this->assertEquals($request, $delegate->getServerRequest());
         $this->assertEquals($response, $response);
     }
 }
