@@ -14,25 +14,25 @@ class MiddlewareTest extends TestCase
     public function it_calls_the_delegate_process_method_as_callable()
     {
         // Arrange
-        $requestProphecy = $this->prophesize(ServerRequestInterface::class);
-        $responseProphecy = $this->prophesize(ResponseInterface::class);
+        $request = $this->prophesize(ServerRequestInterface::class)->reveal();
+        $response = $this->prophesize(ResponseInterface::class)->reveal();
         $middleware = function (
             ServerRequestInterface $request,
             ResponseInterface $response,
             callable $next
-        ) use ($requestProphecy, $responseProphecy) {
-            $this->assertEquals($requestProphecy->reveal(), $request);
-            $this->assertEquals($responseProphecy->reveal(), $response);
+        ) use ($request, $response) {
+            $this->assertEquals($request, $request);
+            $this->assertEquals($response, $response);
 
             return $next($request, $response);
         };
 
-        $middleware = new Middleware($middleware, $responseProphecy->reveal());
+        $middleware = new Middleware($middleware, $response);
 
         // Act
-        $response = $middleware->process($requestProphecy->reveal(), new Delegate($responseProphecy->reveal()));
+        $response = $middleware->process($request, new Delegate($response));
 
         // Assert
-        $this->assertEquals($responseProphecy->reveal(), $response);
+        $this->assertEquals($response, $response);
     }
 }
