@@ -1,5 +1,7 @@
 # PSR-15 interfaced wrapper for callable middleware
 
+[![Build Status](http://img.shields.io/travis/madewithlove/psr15-bridge.svg?style=flat-square)](https://travis-ci.org/madewithlove/psr15-bridge)
+
 ## Installation
 
 ```bash
