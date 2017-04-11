@@ -18,14 +18,14 @@ class MiddlewareTest extends TestCase
         $response = $this->prophesize(ResponseInterface::class)->reveal();
         $delegate = new Delegate($response);
         $middleware = function (
-            ServerRequestInterface $request,
-            ResponseInterface $response,
+            ServerRequestInterface $requestParam,
+            ResponseInterface $responseParam,
             callable $next
         ) use ($request, $response) {
-            $this->assertEquals($request, $request);
-            $this->assertEquals($response, $response);
+            $this->assertEquals($request, $requestParam);
+            $this->assertEquals($response, $responseParam);
 
-            return $next($request, $response);
+            return $next($requestParam, $responseParam);
         };
 
         $middleware = new Middleware($middleware, $response);
