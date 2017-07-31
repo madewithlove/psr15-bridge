@@ -2,9 +2,9 @@
 
 namespace Madewithlove\Psr15\Bridge\Stubs;
 
+use Interop\Http\ServerMiddleware\DelegateInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use Psr\Http\ServerMiddleware\DelegateInterface;
 
 class Delegate implements DelegateInterface
 {
